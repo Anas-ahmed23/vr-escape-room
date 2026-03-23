@@ -8,6 +8,10 @@ public class KeypadSystem : MonoBehaviour
     public GameObject puzzle3Object;
     public Renderer displayRenderer;
 
+    public AudioSource audioSource;
+    public AudioClip successSound;
+    public AudioClip failSound;
+
     public void PressButton(string value)
     {
         currentInput += value;
@@ -15,13 +19,9 @@ public class KeypadSystem : MonoBehaviour
         if (currentInput.Length >= correctCode.Length)
         {
             if (currentInput == correctCode)
-            {
                 Unlock();
-            }
             else
-            {
                 ResetInput();
-            }
         }
     }
 
@@ -33,6 +33,9 @@ public class KeypadSystem : MonoBehaviour
         if (displayRenderer != null)
             displayRenderer.material.color = Color.green;
 
+        if (audioSource != null && successSound != null)
+            audioSource.PlayOneShot(successSound);
+
         Debug.Log("Correct code entered.");
     }
 
@@ -42,6 +45,9 @@ public class KeypadSystem : MonoBehaviour
 
         if (displayRenderer != null)
             displayRenderer.material.color = Color.red;
+
+        if (audioSource != null && failSound != null)
+            audioSource.PlayOneShot(failSound);
 
         Debug.Log("Wrong code.");
     }
